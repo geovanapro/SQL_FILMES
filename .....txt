@@ -1,0 +1,50 @@
+ALTER TABLE ENTRETERIMENTO ADD COLUMN NACIONALIDADE VARCHAR(50);
+UPDATE ENTRETERIMENTO SET NACIONALIDADE = 'Estados Unidos';
+UPDATE ENTRETERIMENTO SET NACIONALIDADE = 'Brasil' WHERE NOME = 'Cidade de Deus';
+UPDATE ENTRETERIMENTO SET NACIONALIDADE = 'Brasil' WHERE NOME = 'Tropa de Elite';
+UPDATE ENTRETERIMENTO SET NACIONALIDADE = 'Brasil' WHERE NOME = 'Central do Brasil';
+UPDATE ENTRETERIMENTO SET NACIONALIDADE = 'Brasil' WHERE NOME = 'O Auto da Compadecida';
+UPDATE ENTRETERIMENTO SET NACIONALIDADE = 'Espanha' WHERE NOME = 'La Casa de Papel';
+UPDATE ENTRETERIMENTO SET NACIONALIDADE = 'Irlanda/Canadá' WHERE NOME = 'Vikings';
+UPDATE ENTRETERIMENTO SET NACIONALIDADE = 'Espanha' WHERE NOME = 'Money Heist';
+UPDATE ENTRETERIMENTO SET NACIONALIDADE = 'Polônia/Estados Unidos' WHERE NOME = 'The Witcher';
+UPDATE ENTRETERIMENTO SET NACIONALIDADE = 'Estados Unidos/Alemanha' WHERE NOME = 'Bastardos Inglórios';
+-------------------------------RANKING--------------------------------------------------
+ALTER TABLE ENTRETERIMENTO ADD COLUMN RANKING INT;
+ALTER TABLE ENTRETERIMENTO ADD COLUMN RANKING_TIPO VARCHAR(50);
+ALTER TABLE ENTRETERIMENTO ADD COLUMN RANKING_NOME VARCHAR(50);
+ALTER TABLE ENTRETERIMENTO ADD COLUMN RANKING INT;
+ALTER TABLE ENTRETERIMENTO ADD COLUMN RANKING_TIPO VARCHAR(50);
+ALTER TABLE ENTRETERIMENTO ADD COLUMN RANKING_NOME VARCHAR(50);
+
+
+INSERT INTO ENTRETERIMENTO (NOME, TIPO, DIRETOR, ATOR_PRINCIPAL, ATRIZ_PRINCIPAL, ANO_LANCAMENTO, DURACAO_MINUTOS, CLASSIFICACAO_ETARIA, GENERO, NACIONALIDADE, RANKING, RANKING_TIPO, RANKING_NOME)
+
+VALUES ('3%', 'SÉRIE', 'Cesar Charlone', 'João Miguel', 'Bianca Comparato', 2016, 45, '16+', 'Drama/Ficção Científica', 'Brasileira','1', 'Netflix', 'Netflix-Brasil'),
+       ('Narcos', 'SÉRIE', 'José Padilha', 'Wagner Moura', 'Boyd Holbrook', 2015, 49, '18+', 'Crime/Drama', 'Americana', '2', 'Netflix', 'Netflix-Brasil');
+
+INSERT INTO ENTRETERIMENTO (NOME, TIPO, DIRETOR, ATOR_PRINCIPAL, ATRIZ_PRINCIPAL, ANO_LANCAMENTO, DURACAO_MINUTOS, CLASSIFICACAO_ETARIA, GENERO, NACIONALIDADE, RANKING, RANKING_TIPO, RANKING_NOME)
+VALUES ('Bacurau', 'FILME', 'Kleber Mendonça Filho e Juliano Dornelles', 'Sônia Braga', 'Udo Kier', 2019, 131, '16+', 'Drama/Ficção Científica', 'Brasileira', '1', 'Nacional', 'Amazon Prime - Brasil'),
+       ('A Vida Invisível', 'FILME', 'Karim Aïnouz', 'Carol Duarte', 'Julia Stockler', 2019, 139, '16+', 'Drama', 'Brasileira', '2', 'Nacional', 'Amazon Prime - Brasil')
+
+
+
+UPDATE ENTRETERIMENTO SET RANKING_NOME = 'NETFLIX' WHERE RANKING_NOME IS NULL;
+
+UPDATE ENTRETERIMENTO SET RANKING_TIPO = 'Nacional' WHERE RANKING_NOME = 'NETFLIX';
+UPDATE ENTRETERIMENTO SET RANKING_TIPO = 'Nacional' WHERE RANKING_NOME = 'AMAZON PRIME';
+UPDATE ENTRETERIMENTO SET RANKING_TIPO = 'Nacional' WHERE RANKING_NOME = 'MEU RANKING';
+
+UPDATE ENTRETERIMENTO
+SET RANKING = (@counter := @counter + 1) -- Incrementa o contador e atribui o valor ao campo RANKING
+ORDER BY RAND(); -- Ordena aleatoriamente os registros
+
+-- Atualiza o campo RANKING_TIPO para indicar que é um ranking aleatório
+UPDATE ENTRETERIMENTO
+SET RANKING_TIPO = 'Aleatório';
+    CASE 
+        WHEN NOME IN ('Breaking Bad', 'Friends', 'The Dark Knight', 'The Shawshank Redemption', 'The Matrix', 'Interview with the Vampire', 'Kill Bill: Volume 1', 'Mr. & Mrs. Smith', 'Money Heist') THEN 1
+        WHEN NOME IN ('Pulp Fiction', 'Fight Club', 'The Godfather', 'Forrest Gump', 'Bastardos Inglórios', 'Central do Brasil', 'Vikings', 'Tropa de Elite') THEN 2
+        WHEN NOME IN ('The Irishman', 'Inception', 'Cidade de Deus', 'The Witcher') THEN 3
+        ELSE 15
+    END;
